@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="ALLERGENE")
+@Table(name = "ALLERGENE")
 public class Allergene {
     @Id
     @Column(name = "ID")
@@ -14,14 +14,16 @@ public class Allergene {
     private Integer id;
     private String nom;
     @ManyToMany
-    @JoinTable(name="INGRT_ALLG",
-            joinColumns= @JoinColumn(name="ID_ALL", referencedColumnName="ID"),
-            inverseJoinColumns= @JoinColumn(name="ID_INGRT", referencedColumnName="ID")
+    @JoinTable(name = "PROD_ALLG",
+            joinColumns = @JoinColumn(name = "ALLG_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID")
     )
-    private Set<Ingredient> ingredients;
+    private Set<Produit> produits;
+
     {
-        ingredients = new HashSet<Ingredient>();
+        produits = new HashSet<Produit>();
     }
+
     public Allergene() {
     }
 

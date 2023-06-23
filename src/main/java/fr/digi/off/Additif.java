@@ -1,22 +1,27 @@
 package fr.digi.off;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 
 @Entity
 @Table(name="ADDITIF")
+
 public class Additif {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+
     private String nom;
-    @ManyToOne
-    @JoinColumn(name="PROD_ID")
-    private Produit produits;
+    @ManyToMany
+    @JoinTable(name="PROD-ADDF",
+            joinColumns = @JoinColumn(name = "ADDF_ID",referencedColumnName="ID"),
+            inverseJoinColumns = @JoinColumn(name = "PROD_ID",referencedColumnName="ID")
+    )
+    private Set<Produit> produits;
 
     public Additif() {
     }

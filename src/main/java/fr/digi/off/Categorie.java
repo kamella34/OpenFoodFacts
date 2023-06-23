@@ -16,7 +16,7 @@ public class Categorie {
     private String description;
 
 
-    @OneToMany(mappedBy="categorie")
+    @OneToMany(mappedBy = "categorie")
     private Set<Produit> produits;
 
     {

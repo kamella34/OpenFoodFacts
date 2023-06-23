@@ -1,7 +1,7 @@
 package fr.digi.off;
 
-import jakarta.persistence.Embeddable;
 
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public enum NutriScore {
@@ -14,16 +14,11 @@ public enum NutriScore {
 
     String lettreNutriScore;
 
-  NutriScore() {
-  }
+    NutriScore(String lettreNutriScore) {
+        this.lettreNutriScore = lettreNutriScore;
+    }
 
-  NutriScore(String lettreNutriScore) {
-    this.lettreNutriScore = lettreNutriScore;
-  }
-
-
-
-  public String getLettreNutriScore() {
+    public String getLettreNutriScore() {
         return lettreNutriScore;
     }
 
