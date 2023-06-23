@@ -1,25 +1,27 @@
 package fr.digi.off;
 
-public class Additifs {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name="ADDITIF")
+public class Additif {
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column
     private String nom;
+    @ManyToOne
+    @JoinColumn(name="PROD_ID")
+    private Produit produits;
 
-    public Additifs() {
+    public Additif() {
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getNom() {
-        return nom;
-    }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 }
