@@ -55,16 +55,31 @@ public class Produit {
     public Produit() {
     }
 
-    public Produit(String nom, Double joule, Double graisse, NutriScore nutriScore, Categorie categorie, Set<Ingredient> ingredients, Set<Additif> additifs, Set<Allergene> allergenes, Marque marques) {
+    public Produit(String nom, Double joule, Double graisse, NutriScore nutriScore, Categorie categorie, Marque marques) {
         this.nom = nom;
         this.joule = joule;
         this.graisse = graisse;
         this.nutriScore = nutriScore;
         this.categorie = categorie;
         this.ingredients = ingredients;
-        this.additifs = additifs;
-        this.allergenes = allergenes;
         this.marques = marques;
+    }
+
+    @Override
+    public String toString() {
+        return "Produit{" +
+
+                "nom='" + nom + '\'' +
+                ", nutriScore=" + nutriScore +
+                ", joule=" + joule +
+                ", graisse=" + graisse +
+
+                ", categorie=" + categorie +
+                ", ingredients=" + ingredients +
+                ", additifs=" + additifs +
+                ", allergenes=" + allergenes +
+                ", marques=" + marques +
+                '}';
     }
 
     public Integer getId() {

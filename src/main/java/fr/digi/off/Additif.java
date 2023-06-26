@@ -27,9 +27,13 @@ public class Additif {
         public Additif() {
         }
 
-        public Additif(String nom, Set<Produit> produits) {
+        public Additif(String nom) {
                 this.nom = nom;
-                this.produits = produits;
+        }
+
+        @Override
+        public String toString() {
+                return "additifs{"+"'nom='" + nom +"'"+'}';
         }
 
         public Integer getId() {

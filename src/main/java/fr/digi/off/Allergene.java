@@ -27,9 +27,15 @@ public class Allergene {
     public Allergene() {
     }
 
-    public Allergene(String nom, Set<Produit> produits) {
+    public Allergene(String nom) {
         this.nom = nom;
-        this.produits = produits;
+
+    }
+
+
+    @Override
+    public String toString() {
+        return "Allergene{" +"{nom='" + nom + '\'' + '}';
     }
 
     public Integer getId() {

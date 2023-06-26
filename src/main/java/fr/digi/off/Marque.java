@@ -24,9 +24,15 @@ public class Marque {
         public Marque() {
         }
 
-        public Marque( String nom, Set<Produit> produits) {
+        public Marque( String nom) {
                 this.nom = nom;
-                this.produits = produits;
+
+        }
+
+        @Override
+        public String toString() {
+                return "Marque{" +
+                        " nom='" + nom + '\'' +'}';
         }
 
         public Integer getId() {

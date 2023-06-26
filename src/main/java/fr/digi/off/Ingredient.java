@@ -26,12 +26,16 @@ public class Ingredient {
 
     }
 
+    @Override
+    public String toString() {
+        return "Ingredient{" + " nom='" + nom + '\'' +'}';
+    }
+
     public Ingredient() {
     }
 
-    public Ingredient(String nom, Set<Produit> produits) {
+    public Ingredient(String nom) {
         this.nom = nom;
-        this.produits = produits;
     }
 
     public Integer getId() {

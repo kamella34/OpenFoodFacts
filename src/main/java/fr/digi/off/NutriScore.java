@@ -14,8 +14,11 @@ public enum NutriScore {
 
     String lettreNutriScore;
 
-    NutriScore() {
+    @Override
+    public String toString() {
+        return "NutriScore{" + "lettreNutriScore='" + lettreNutriScore + '\'' + '}';
     }
+
 
     NutriScore(String lettreNutriScore) {
         this.lettreNutriScore = lettreNutriScore;
@@ -27,5 +30,14 @@ public enum NutriScore {
 
     public void setLettreNutriScore(String lettreNutriScore) {
         this.lettreNutriScore = lettreNutriScore;
+    }
+
+    public static NutriScore getNutriScoreByLettre(String lettre) {
+        for (NutriScore nutriScore : NutriScore.values()) {
+            if (nutriScore.getLettreNutriScore().equals(lettre)) {
+                return nutriScore;
+            }
+        }
+        return null;
     }
 }
