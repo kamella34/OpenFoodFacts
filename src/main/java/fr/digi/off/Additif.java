@@ -59,4 +59,12 @@ public class Additif {
     public void setProduits(Set<Produit> produits) {
         this.produits = produits;
     }
+
+    @Override
+    public String toString() {
+        return "Additif{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                '}';
+    }
 }

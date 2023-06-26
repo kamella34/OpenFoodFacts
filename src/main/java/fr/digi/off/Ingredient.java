@@ -58,4 +58,12 @@ public class Ingredient {
     public void setProduits(Set<Produit> produits) {
         this.produits = produits;
     }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                '}';
+    }
 }

@@ -59,4 +59,12 @@ public class Allergene {
     public void setProduits(Set<Produit> produits) {
         this.produits = produits;
     }
+
+    @Override
+    public String toString() {
+        return "Allergene{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                '}';
+    }
 }

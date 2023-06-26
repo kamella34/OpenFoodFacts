@@ -2,6 +2,7 @@ package org.example;
 
 import fr.digi.off.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.*;
@@ -17,21 +18,20 @@ public class Main {
         Path path2 = Paths.get("src/main/resources/open-food-facts-new.csv");
         try {
             List<String> lines = Files.readAllLines(path1, StandardCharsets.UTF_8);
-            for (String line : lines) {
-                Pattern pattern = Pattern.compile("(\\|)+");
-                Matcher matcher = pattern.matcher(line);
-                StringBuffer stringBuffer = new StringBuffer();
-                while (matcher.find()) {
-                    matcher.appendReplacement(stringBuffer, "|");
-                }
-                matcher.appendTail(stringBuffer);
-                String replacedText = stringBuffer.toString();
-                replacedText = replacedText.replaceAll("_", "");
-                //System.out.println("replacedText = " + replacedText);
+            for (int i = 1; i < lines.size(); i++) {
+                String line = lines.get(i);
+                line = line.substring(0, line.length()-1);
 
                 //Séparation des élément
-                String[] token = line.split("|");
-
+                String[] token = line.split("\\|");
+                System.out.println(token.length);
+                for (int ii = 0; ii < token.length; ii++) {
+                    if (token[ii] == ""){
+                        token[ii] = null;
+                    }
+                    System.out.println("token1["+ii+"] = " + token[ii]);
+                }
+                
                 //Catégorie
                 Categorie categorie = new Categorie(token[0]);
 
@@ -40,14 +40,12 @@ public class Main {
 
                 //Joule
                 String joule = token[5];
-                joule = joule.replaceAll("o", "0");
-
+   
                 //Graisse
                 String graisse = token[6];
-                graisse = graisse.replaceAll("o", "0");
 
                 //Produit
-                Produit produit = new Produit(token[0], Double.parseDouble(joule), Double.parseDouble(graisse), NutriScore.getNutriScoreByLettre(token[3]) , categorie, marque);
+                Produit produit = new Produit(token[2], Double.parseDouble(joule), Double.parseDouble(graisse), NutriScore.getNutriScoreByLettre(token[3]) , categorie, marque);
 
                 //Ingredients
                 String[] ingredients = token[4].split(",");

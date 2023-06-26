@@ -12,16 +12,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Ingredient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Marque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Marque.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/NutriScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/NutriScore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Produit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Produit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Additif.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Additif.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Allergene.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Allergene.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Categorie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Categorie.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Ingredient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Ingredient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Marque.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Marque.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/NutriScore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/NutriScore.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Produit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Produit.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +81,7 @@
       <updated>1687508203709</updated>
       <workItem from="1687508205214" duration="2701000" />
       <workItem from="1687775669214" duration="2101000" />
-      <workItem from="1687781736210" duration="6245000" />
+      <workItem from="1687781736210" duration="11958000" />
     </task>
     <servers />
   </component>

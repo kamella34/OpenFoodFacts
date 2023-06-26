@@ -5,12 +5,12 @@ import jakarta.persistence.Embeddable;
 
 
 public enum NutriScore {
-    A("A"),
-    B("B"),
-    C("C"),
-    D("D"),
-    E("E"),
-    F("F");
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f");
 
     String lettreNutriScore;
 
