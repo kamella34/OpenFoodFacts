@@ -1,5 +1,9 @@
 package fr.digi.off;
 
+
+import jakarta.persistence.Embeddable;
+
+
 public enum NutriScore {
     A("A"),
     B("B"),
@@ -20,5 +24,14 @@ public enum NutriScore {
 
     public void setLettreNutriScore(String lettreNutriScore) {
         this.lettreNutriScore = lettreNutriScore;
+    }
+
+    public static NutriScore getNutriScoreByLettre(String lettre) {
+        for (NutriScore nutriScore : NutriScore.values()) {
+            if (nutriScore.getLettreNutriScore().equals(lettre)) {
+                return nutriScore;
+            }
+        }
+        return null;
     }
 }

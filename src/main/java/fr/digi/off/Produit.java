@@ -1,6 +1,7 @@
 package fr.digi.off;
 
 import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,35 +14,35 @@ public class Produit {
     private Integer id;
 
     private String nom;
-    private Double Joule;
-    private Double Graisse;
+    private Double joule;
+    private Double graisse;
 
     @Enumerated
     private NutriScore nutriScore;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "CATEGORIE")
     private Categorie categorie;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "PROD_INGRT",
             joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "INGRT_ID", referencedColumnName = "ID")
     )
     private Set<Ingredient> ingredients;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "PROD-ADDF",
             joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ADDF_ID", referencedColumnName = "ID")
     )
     private Set<Additif> additifs;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "PROD_ALLG",
             joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ALLG_ID", referencedColumnName = "ID")
     )
     private Set<Allergene> allergenes;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "MARQUE_ID")
     private Marque marques;
 
@@ -50,6 +51,112 @@ public class Produit {
         additifs = new HashSet<Additif>();
         allergenes = new HashSet<Allergene>();
     }
+
     public Produit() {
+    }
+
+    public Produit(String nom, Double joule, Double graisse, NutriScore nutriScore, Categorie categorie, Marque marques) {
+        this.nom = nom;
+        this.joule = joule;
+        this.graisse = graisse;
+        this.nutriScore = nutriScore;
+        this.categorie = categorie;
+        this.marques = marques;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Double getJoule() {
+        return joule;
+    }
+
+    public void setJoule(Double joule) {
+        this.joule = joule;
+    }
+
+    public Double getGraisse() {
+        return graisse;
+    }
+
+    public void setGraisse(Double graisse) {
+        this.graisse = graisse;
+    }
+
+    public NutriScore getNutriScore() {
+        return nutriScore;
+    }
+
+    public void setNutriScore(NutriScore nutriScore) {
+        this.nutriScore = nutriScore;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Set<Additif> getAdditifs() {
+        return additifs;
+    }
+
+    public void setAdditifs(Set<Additif> additifs) {
+        this.additifs = additifs;
+    }
+
+    public Set<Allergene> getAllergenes() {
+        return allergenes;
+    }
+
+    public void setAllergenes(Set<Allergene> allergenes) {
+        this.allergenes = allergenes;
+    }
+
+    public Marque getMarques() {
+        return marques;
+    }
+
+    public void setMarques(Marque marques) {
+        this.marques = marques;
+    }
+
+    @Override
+    public String toString() {
+        return "Produit{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", joule=" + joule +
+                ", graisse=" + graisse +
+                ", nutriScore=" + nutriScore +
+                ", categorie=" + categorie +
+                ", ingredients=" + ingredients +
+                ", additifs=" + additifs +
+                ", allergenes=" + allergenes +
+                ", marques=" + marques +
+                '}';
     }
 }

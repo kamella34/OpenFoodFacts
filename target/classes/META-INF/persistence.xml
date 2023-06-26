@@ -22,6 +22,7 @@
     <class>fr.digi.off.Allergene</class>
     <class>fr.digi.off.Categorie</class>
     <class>fr.digi.off.Marque</class>
+    <class>fr.digi.off.NutriScore</class>
     <class>fr.digi.off.Ingredient</class>
     <class>fr.digi.off.Produit</class>
     <properties>
