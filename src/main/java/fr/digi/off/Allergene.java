@@ -27,5 +27,32 @@ public class Allergene {
     public Allergene() {
     }
 
+    public Allergene(String nom, Set<Produit> produits) {
+        this.nom = nom;
+        this.produits = produits;
+    }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Set<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(Set<Produit> produits) {
+        this.produits = produits;
+    }
 }

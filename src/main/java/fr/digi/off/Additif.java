@@ -9,24 +9,50 @@ import java.util.Set;
 @Table(name="ADDITIF")
 
 public class Additif {
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
+        @Id
+        @Column(name = "ID")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
 
 
-    private String nom;
-    @ManyToMany
-    @JoinTable(name="PROD-ADDF",
-            joinColumns = @JoinColumn(name = "ADDF_ID",referencedColumnName="ID"),
-            inverseJoinColumns = @JoinColumn(name = "PROD_ID",referencedColumnName="ID")
-    )
-    private Set<Produit> produits;
+        private String nom;
+        @ManyToMany
+        @JoinTable(name="PROD-ADDF",
+                joinColumns = @JoinColumn(name = "ADDF_ID",referencedColumnName="ID"),
+                inverseJoinColumns = @JoinColumn(name = "PROD_ID",referencedColumnName="ID")
+        )
+        private Set<Produit> produits;
 
-    public Additif() {
-    }
+        public Additif() {
+        }
 
+        public Additif(String nom, Set<Produit> produits) {
+                this.nom = nom;
+                this.produits = produits;
+        }
 
+        public Integer getId() {
+                return id;
+        }
 
+        public void setId(Integer id) {
+                this.id = id;
+        }
 
+        public String getNom() {
+                return nom;
+        }
+
+        public void setNom(String nom) {
+                this.nom = nom;
+        }
+
+        public Set<Produit> getProduits() {
+                return produits;
+        }
+
+        public void setProduits(Set<Produit> produits) {
+                this.produits = produits;
+        }
 }
