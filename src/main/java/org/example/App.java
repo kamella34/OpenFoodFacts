@@ -29,6 +29,41 @@ public class App {
                 line = line.replaceAll("[\\d.%]+","" );
 
 
+                String[] charsTab = line.split("");
+                int pipeCount = 0;
+                int pipeIngredient = 4;
+                int pipeAttendue = 29;
+                for (int ii = 0; ii < charsTab.length; ii++) {
+                    //Compte le nombre de pipe apres ingradient
+                    if (charsTab[ii].equals("|")){
+                        pipeCount++;
+                    }
+                }
+                if (pipeAttendue < pipeCount){
+                    int pipeSurplus = pipeCount - pipeAttendue;
+                    System.out.println("PIPESURPLUS"+pipeSurplus);
+                    int pipeCount2 = 0;
+                    //on boucle sur la ligne
+                    for (int j = 0; j < charsTab.length; j++) {
+                        //Si on croise un pipe alors pipeCount2++
+                        if (charsTab[j].equals("|")){
+                            pipeCount2++;
+                        }
+                        if (pipeIngredient < pipeCount2){
+                            if (pipeSurplus != 0){
+                                charsTab[j] = "l";
+                            }
+                        }
+                    }
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String el: charsTab) {
+                    stringBuilder.append(el);
+                }
+                line = stringBuilder.toString();
+                System.out.println("LINE"+line);
+
+
                 //Séparation des élément
                 String[] token = line.split("\\|");
                 while (token.length < 30) {
