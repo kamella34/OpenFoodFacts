@@ -16,7 +16,7 @@ public enum NutriScore {
 
     @Override
     public String toString() {
-        return "NutriScore{" + "lettreNutriScore='" + lettreNutriScore + '\'' + '}';
+        return "{"+ lettreNutriScore+ '}';
     }
 
 
