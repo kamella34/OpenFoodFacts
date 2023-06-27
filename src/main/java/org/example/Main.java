@@ -19,12 +19,19 @@ public class Main {
         try {
             List<String> lines = Files.readAllLines(path1, StandardCharsets.UTF_8);
             for (int i = 1; i < lines.size(); i++) {
+                System.out.println(i);
                 String line = lines.get(i);
                 line = line.substring(0, line.length()-1);
-
+                line = line.replaceAll("[*_:]", "");
                 //Séparation des élément
                 String[] token = line.split("\\|");
-                System.out.println(token.length);
+                while (token.length < 30) {
+                    String[] newToken = new String[token.length + 1];
+                    System.arraycopy(token, 0, newToken, 0, token.length);
+                    newToken[token.length] = null;
+                    token = newToken;
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------\n");
                 for (int ii = 0; ii < token.length; ii++) {
                     if (token[ii] == ""){
                         token[ii] = null;
@@ -40,15 +47,25 @@ public class Main {
 
                 //Joule
                 String joule = token[5];
-   
+                if (joule == null){
+                    joule = "0";
+                }
+
                 //Graisse
                 String graisse = token[6];
+                if (graisse == null){
+                    graisse = "0";
+                }
 
                 //Produit
                 Produit produit = new Produit(token[2], Double.parseDouble(joule), Double.parseDouble(graisse), NutriScore.getNutriScoreByLettre(token[3]) , categorie, marque);
 
                 //Ingredients
-                String[] ingredients = token[4].split(",");
+                Pattern pattern4 = Pattern.compile("[\\d.%]+");
+                Matcher matcher4 = pattern4.matcher(token[4]);
+
+                String output = matcher4.replaceAll("");
+                String[] ingredients = output.split(",");
                 Set<Ingredient> ingredientTab = new HashSet<>();
                 for (String ingredient: ingredients) {
                     Ingredient ingredient1 = new Ingredient(ingredient);
