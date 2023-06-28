@@ -64,7 +64,7 @@ public class App {
                     stringBuilder.append(el);
                 }
                 line = stringBuilder.toString();
-                System.out.println("LINE" + line);
+               // System.out.println("LINE" + line);
 
                 //Séparation des élément
                 String[] token = line.split("\\|");
@@ -79,10 +79,11 @@ public class App {
                     if (token[ii] == "") {
                         token[ii] = null;
                     }
-                    System.out.println("token1[" + ii + "] = " + token[ii]);
+                    //System.out.println("token1[" + ii + "] = " + token[ii]);
                 }
 
                 //Catégorie
+
                 Categorie categorie = new Categorie(token[0]);
 
                 //Marque
@@ -102,9 +103,10 @@ public class App {
 
                 //Produit
                 Produit produit = new Produit(token[2], Double.parseDouble(joule), Double.parseDouble(graisse), NutriScore.getNutriScoreByLettre(token[3].toUpperCase()), categorie, marque);
-                System.out.println("PRODUIT"+produit);
-                //Ingredients
+                //System.out.println("PRODUIT"+produit);
 
+
+                //Ingredients
                 String[] ingredients = token[4].split(",");
 
                 Set<Ingredient> ingredientTab = new HashSet<>();

@@ -18,7 +18,7 @@ public class Produit {
     private Double joule;
     private Double graisse;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private NutriScore nutriScore;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "CATEGORIE")
