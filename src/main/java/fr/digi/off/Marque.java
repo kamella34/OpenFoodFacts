@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "MARQUE")
+//@Cacheable
 public class Marque {
 
         @Id
@@ -14,7 +15,8 @@ public class Marque {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
         private String nom;
-        @OneToMany(mappedBy = "MARQUE")
+
+       @OneToMany(mappedBy = "marques")
         private Set<Produit> produits;
 
         {
@@ -51,11 +53,5 @@ public class Marque {
                 this.nom = nom;
         }
 
-        public Set<Produit> getProduits() {
-                return produits;
-        }
 
-        public void setProduits(Set<Produit> produits) {
-                this.produits = produits;
-        }
 }

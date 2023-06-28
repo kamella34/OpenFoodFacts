@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="ADDITIF")
-
+//@Cacheable
 public class Additif {
 
         @Id

@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ALLERGENE")
+//@Cacheable
 public class Allergene {
     @Id
     @Column(name = "ID")
