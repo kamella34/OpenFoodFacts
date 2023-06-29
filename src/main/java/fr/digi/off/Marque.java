@@ -2,42 +2,36 @@ package fr.digi.off;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "MARQUE")
+@Table(name = "Marque")
 public class Marque {
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String nom;
-    @OneToMany(mappedBy = "MARQUE")
-    private Set<Produit> produits;
+    @Column(name = "Id_Marque")
+    private int idMarque;
 
-    {
-        produits = new HashSet<Produit>();
-    }
+    @Column(name = "nom")
+    private String nom;
+
+    @OneToMany(mappedBy = "marque", cascade = CascadeType.ALL)
+    private List<Produit> produits = new ArrayList<>();
 
     public Marque() {
     }
 
-    public Marque( String nom) {
+    public Marque(String nom) {
         this.nom = nom;
     }
 
-    public Marque( String nom, Set<Produit> produits) {
-        this.nom = nom;
-        this.produits = produits;
+    public int getIdMarque() {
+        return idMarque;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdMarque(int idMarque) {
+        this.idMarque = idMarque;
     }
 
     public String getNom() {
@@ -48,18 +42,18 @@ public class Marque {
         this.nom = nom;
     }
 
-    public Set<Produit> getProduits() {
+    public List<Produit> getProduits() {
         return produits;
     }
 
-    public void setProduits(Set<Produit> produits) {
+    public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
 
     @Override
     public String toString() {
         return "Marque{" +
-                "id=" + id +
+                "idMarque=" + idMarque +
                 ", nom='" + nom + '\'' +
                 '}';
     }

@@ -4,13 +4,15 @@ package fr.digi.off;
 import jakarta.persistence.Embeddable;
 
 
+
 public enum NutriScore {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f");
+    A("A"),
+    B("B"),
+    C("C"),
+    D("D"),
+    E("E"),
+    F("F");
+
 
     String lettreNutriScore;
 

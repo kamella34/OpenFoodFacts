@@ -2,26 +2,16 @@ package fr.digi.off;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
-@Table(name = "INGREDIENT")
+@Table(name = "Ingredient")
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String nom;
+    @Column(name = "Id_Ingredient")
+    private int idIngredient;
 
-    @ManyToMany
-    @JoinTable(name = "PROD_INGRT",
-            joinColumns = @JoinColumn(name = "INGRT_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID")
-    )
-    private Set<Produit> produits;
-    {
-        produits = new HashSet<Produit>();
-    }
+    @Column(name = "nom")
+    private String nom;
 
     public Ingredient() {
     }
@@ -30,17 +20,12 @@ public class Ingredient {
         this.nom = nom;
     }
 
-    public Ingredient(String nom, Set<Produit> produits) {
-        this.nom = nom;
-        this.produits = produits;
+    public int getIdIngredient() {
+        return idIngredient;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdIngredient(int idIngredient) {
+        this.idIngredient = idIngredient;
     }
 
     public String getNom() {
@@ -51,18 +36,10 @@ public class Ingredient {
         this.nom = nom;
     }
 
-    public Set<Produit> getProduits() {
-        return produits;
-    }
-
-    public void setProduits(Set<Produit> produits) {
-        this.produits = produits;
-    }
-
     @Override
     public String toString() {
         return "Ingredient{" +
-                "id=" + id +
+                "idIngredient=" + idIngredient +
                 ", nom='" + nom + '\'' +
                 '}';
     }

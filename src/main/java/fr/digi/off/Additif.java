@@ -2,27 +2,22 @@ package fr.digi.off;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
-@Table(name="ADDITIF")
-
+@Table(name = "Additif")
 public class Additif {
-
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "Id_Additif")
+    private int idAdditif;
 
-
+    @Column(name = "nom")
     private String nom;
-    @ManyToMany
-    @JoinTable(name="PROD-ADDF",
-            joinColumns = @JoinColumn(name = "ADDF_ID",referencedColumnName="ID"),
-            inverseJoinColumns = @JoinColumn(name = "PROD_ID",referencedColumnName="ID")
-    )
-    private Set<Produit> produits;
+
+    @ManyToMany(mappedBy = "additifs")
+    private Set<Produit> produits = new HashSet<>();
 
     public Additif() {
     }
@@ -31,17 +26,12 @@ public class Additif {
         this.nom = nom;
     }
 
-    public Additif(String nom, Set<Produit> produits) {
-        this.nom = nom;
-        this.produits = produits;
+    public int getIdAdditif() {
+        return idAdditif;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdAdditif(int idAdditif) {
+        this.idAdditif = idAdditif;
     }
 
     public String getNom() {
@@ -63,7 +53,7 @@ public class Additif {
     @Override
     public String toString() {
         return "Additif{" +
-                "id=" + id +
+                "idAdditif=" + idAdditif +
                 ", nom='" + nom + '\'' +
                 '}';
     }

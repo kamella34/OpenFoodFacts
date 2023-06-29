@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e89edb8-3d86-4df4-93db-e5d20cfb774a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/NewTraitement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Additif.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Additif.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Allergene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Allergene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Categorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Categorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Marque.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Marque.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/NutriScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/NutriScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/digi/off/Produit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/digi/off/Produit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Additif.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Additif.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Allergene.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Allergene.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Categorie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Categorie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Ingredient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Ingredient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Marque.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Marque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/NutriScore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/NutriScore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fr/digi/off/Produit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fr/digi/off/Produit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +90,8 @@
       <workItem from="1687508205214" duration="2701000" />
       <workItem from="1687775669214" duration="2101000" />
       <workItem from="1687781736210" duration="12064000" />
-      <workItem from="1687851448396" duration="5836000" />
+      <workItem from="1687851448396" duration="19639000" />
+      <workItem from="1687939160308" duration="34688000" />
     </task>
     <servers />
   </component>

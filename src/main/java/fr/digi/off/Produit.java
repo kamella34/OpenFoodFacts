@@ -2,74 +2,76 @@ package fr.digi.off;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "PRODUIT")
+@Table(name = "Produit")
 public class Produit {
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "Id_Produit")
+    private Integer idProduit;
 
+    @Column(name = "nom")
     private String nom;
-    private Double joule;
-    private Double graisse;
 
-    @Enumerated
-    private NutriScore nutriScore;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "CATEGORIE")
+    @Column(name = "joule")
+    private double joule;
+
+    @Column(name = "graisse")
+    private double graisse;
+
+    @Column(name = "Nutriscore")
+    @Enumerated(EnumType.STRING)
+    private NutriScore nutriscore;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "Id_Categorie")
     private Categorie categorie;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "PROD_INGRT",
-            joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "INGRT_ID", referencedColumnName = "ID")
-    )
-    private Set<Ingredient> ingredients;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "Id_Marque")
+    private Marque marque;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "PROD-ADDF",
-            joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "ADDF_ID", referencedColumnName = "ID")
-    )
-    private Set<Additif> additifs;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "PROD_ALLG",
-            joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "ALLG_ID", referencedColumnName = "ID")
-    )
-    private Set<Allergene> allergenes;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "MARQUE_ID")
-    private Marque marques;
+    @ManyToMany
+    @JoinTable(name = "contenir",
+            joinColumns = @JoinColumn(name = "Id_Produit"),
+            inverseJoinColumns = @JoinColumn(name = "Id_Allergene"))
+    private Set<Allergene> allergenes = new HashSet<>();
 
-    {
-        ingredients = new HashSet<Ingredient>();
-        additifs = new HashSet<Additif>();
-        allergenes = new HashSet<Allergene>();
-    }
+    @ManyToMany
+    @JoinTable(name = "inclure",
+            joinColumns = @JoinColumn(name = "Id_Produit"),
+            inverseJoinColumns = @JoinColumn(name = "Id_Additif"))
+    private Set<Additif> additifs = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "Comporter",
+            joinColumns = @JoinColumn(name = "Id_Produit"),
+            inverseJoinColumns = @JoinColumn(name = "Id_Ingredient"))
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     public Produit() {
     }
 
-    public Produit(String nom, Double joule, Double graisse, NutriScore nutriScore, Categorie categorie, Marque marques) {
+    public Produit(String nom, double joule, double graisse, NutriScore nutriscore, Categorie categorie, Marque marque) {
         this.nom = nom;
         this.joule = joule;
         this.graisse = graisse;
-        this.nutriScore = nutriScore;
+        this.nutriscore = nutriscore;
         this.categorie = categorie;
-        this.marques = marques;
+        this.marque = marque;
     }
 
-    public Integer getId() {
-        return id;
+    public int getIdProduit() {
+        return idProduit;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdProduit(int idProduit) {
+        this.idProduit = idProduit;
     }
 
     public String getNom() {
@@ -80,28 +82,28 @@ public class Produit {
         this.nom = nom;
     }
 
-    public Double getJoule() {
+    public double getJoule() {
         return joule;
     }
 
-    public void setJoule(Double joule) {
+    public void setJoule(double joule) {
         this.joule = joule;
     }
 
-    public Double getGraisse() {
+    public double getGraisse() {
         return graisse;
     }
 
-    public void setGraisse(Double graisse) {
+    public void setGraisse(double graisse) {
         this.graisse = graisse;
     }
 
-    public NutriScore getNutriScore() {
-        return nutriScore;
+    public NutriScore getNutriscore() {
+        return nutriscore;
     }
 
-    public void setNutriScore(NutriScore nutriScore) {
-        this.nutriScore = nutriScore;
+    public void setNutriscore(NutriScore nutriscore) {
+        this.nutriscore = nutriscore;
     }
 
     public Categorie getCategorie() {
@@ -112,20 +114,12 @@ public class Produit {
         this.categorie = categorie;
     }
 
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
+    public Marque getMarque() {
+        return marque;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Set<Additif> getAdditifs() {
-        return additifs;
-    }
-
-    public void setAdditifs(Set<Additif> additifs) {
-        this.additifs = additifs;
+    public void setMarque(Marque marque) {
+        this.marque = marque;
     }
 
     public Set<Allergene> getAllergenes() {
@@ -136,27 +130,35 @@ public class Produit {
         this.allergenes = allergenes;
     }
 
-    public Marque getMarques() {
-        return marques;
+    public Set<Additif> getAdditifs() {
+        return additifs;
     }
 
-    public void setMarques(Marque marques) {
-        this.marques = marques;
+    public void setAdditifs(Set<Additif> additifs) {
+        this.additifs = additifs;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     @Override
     public String toString() {
         return "Produit{" +
-                "id=" + id +
+                "idProduit=" + idProduit +
                 ", nom='" + nom + '\'' +
                 ", joule=" + joule +
                 ", graisse=" + graisse +
-                ", nutriScore=" + nutriScore +
+                ", nutriscore=" + nutriscore +
                 ", categorie=" + categorie +
-                ", ingredients=" + ingredients +
-                ", additifs=" + additifs +
+                ", marque=" + marque +
                 ", allergenes=" + allergenes +
-                ", marques=" + marques +
+                ", additifs=" + additifs +
+                ", ingredients=" + ingredients +
                 '}';
     }
 }

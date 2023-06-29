@@ -2,27 +2,22 @@ package fr.digi.off;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "ALLERGENE")
+@Table(name = "Allergene")
 public class Allergene {
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String nom;
-    @ManyToMany
-    @JoinTable(name = "PROD_ALLG",
-            joinColumns = @JoinColumn(name = "ALLG_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "ID")
-    )
-    private Set<Produit> produits;
+    @Column(name = "Id_Allergene")
+    private int idAllergene;
 
-    {
-        produits = new HashSet<Produit>();
-    }
+    @Column(name = "nom")
+    private String nom;
+
+    @ManyToMany(mappedBy = "allergenes")
+    private List<Produit> produits = new ArrayList<>();
 
     public Allergene() {
     }
@@ -31,17 +26,12 @@ public class Allergene {
         this.nom = nom;
     }
 
-    public Allergene(String nom, Set<Produit> produits) {
-        this.nom = nom;
-        this.produits = produits;
+    public int getIdAllergene() {
+        return idAllergene;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdAllergene(int idAllergene) {
+        this.idAllergene = idAllergene;
     }
 
     public String getNom() {
@@ -52,18 +42,18 @@ public class Allergene {
         this.nom = nom;
     }
 
-    public Set<Produit> getProduits() {
+    public List<Produit> getProduits() {
         return produits;
     }
 
-    public void setProduits(Set<Produit> produits) {
+    public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
 
     @Override
     public String toString() {
         return "Allergene{" +
-                "id=" + id +
+                "idAllergene=" + idAllergene +
                 ", nom='" + nom + '\'' +
                 '}';
     }
