@@ -24,34 +24,34 @@ public class Produit {
     @Column(name = "graisse")
     private double graisse;
 
-    @Column(name = "Nutriscore")
+    @Column(name = "nutriscore")
     @Enumerated(EnumType.STRING)
     private NutriScore nutriscore;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "Id_Categorie")
+    @JoinColumn(name = "id_mategorie")
     private Categorie categorie;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "Id_Marque")
+    @JoinColumn(name = "id_marque")
     private Marque marque;
 
     @ManyToMany
     @JoinTable(name = "contenir",
-            joinColumns = @JoinColumn(name = "Id_Produit"),
-            inverseJoinColumns = @JoinColumn(name = "Id_Allergene"))
+            joinColumns = @JoinColumn(name = "id_produit"),
+            inverseJoinColumns = @JoinColumn(name = "id_allergene"))
     private Set<Allergene> allergenes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "inclure",
-            joinColumns = @JoinColumn(name = "Id_Produit"),
-            inverseJoinColumns = @JoinColumn(name = "Id_Additif"))
+            joinColumns = @JoinColumn(name = "id_produit"),
+            inverseJoinColumns = @JoinColumn(name = "id_additif"))
     private Set<Additif> additifs = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "Comporter",
-            joinColumns = @JoinColumn(name = "Id_Produit"),
-            inverseJoinColumns = @JoinColumn(name = "Id_Ingredient"))
+    @JoinTable(name = "comporter",
+            joinColumns = @JoinColumn(name = "id_produit"),
+            inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
     private Set<Ingredient> ingredients = new HashSet<>();
 
     public Produit() {
