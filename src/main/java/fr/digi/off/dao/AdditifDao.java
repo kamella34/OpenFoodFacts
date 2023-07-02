@@ -1,8 +1,6 @@
 package fr.digi.off.dao;
 
 import fr.digi.off.Additif;
-import jakarta.persistence.EntityManager;
-
 import java.util.List;
 
 public interface AdditifDao {

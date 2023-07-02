@@ -4,7 +4,6 @@ import fr.digi.off.*;
 import fr.digi.off.dao.*;
 import fr.digi.off.dao.jpa.*;
 import jakarta.persistence.*;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +19,6 @@ public class NewFichierTraitement {
         Map<String, Additif> additifs = new HashMap<>();
         Map<String, Allergene> allergenes = new HashMap<>();
         Map<String, Ingredient> ingredients = new HashMap<>();
-        Produit produit = null;
         try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("openfoodfactsdev");
              EntityManager em = emf.createEntityManager();) {
             EntityTransaction et = em.getTransaction();
@@ -35,6 +33,7 @@ public class NewFichierTraitement {
 
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             for (int i = 1; i < lines.size(); i++) {
+                et.begin();
                 String[] columns = lines.get(i).split("\\|", 31);
 
                 //Graisse
@@ -46,51 +45,76 @@ public class NewFichierTraitement {
                 //Additifs
                 String additifLine = traiter(columns[29]);
                 Set<Additif> setAdditifs = createAdditifs(additifLine, additifs, additifDAO);
+                for (Additif additif : setAdditifs) {
+                    additifDAO.save(additif);
+                }
 
                 //Allergènes
                 String allergeneLine = traiter(columns[28]);
                 Set<Allergene> setAllergenes = createAllergenes(allergeneLine, allergenes, allergeneDAO);
+                for (Allergene allergene: setAllergenes) {
+                    allergeneDAO.save(allergene);
+                }
 
                 // Ingrédients
                 String ingredientLine = traiter(columns[4]);
                 Set<Ingredient> setIngredients = createIngredients(ingredientLine, ingredients, ingredientDAO);
+                for (Ingredient ingredient: setIngredients) {
+                    ingredientDAO.save(ingredient);
+                }
 
                 // Categorie
                 Categorie categorie = createCategorie(columns[0], categories,categorieDao);
+                categorieDao.save(categorie);
 
                 // Marque
                 String marqueName = traiter(columns[1]);
                 Marque marque = createMarque(marqueName, marques,marqueDao);
+                if (marque != null) {
+                    marqueDao.save(marque);
+                }
 
                 //Produit
-                produit = new Produit(columns[2], joule, graisse, NutriScore.getNutriScoreByLettre(columns[3].toUpperCase()),categorie , marque);
+                Produit produit = new Produit(columns[2], joule, graisse, NutriScore.getNutriScoreByLettre(columns[3].toUpperCase()),categorie , marque);
                 produit.setIngredients(setIngredients);
                 produit.setAllergenes(setAllergenes);
                 produit.setAdditifs(setAdditifs);
+                produitDAO.save(produit);
+
+                produits.add(produit);
+                et.commit();
             }
+            /*
             et.begin();
             for (Categorie categorie: categories.values()) {
                 em.persist(categorie);
             }
-
+            et.commit();
+            et.begin();
             for (Marque marque: marques.values()) {
                 em.persist(marque);
             }
-
+            et.commit();
+            et.begin();
             for (Additif additif: additifs.values()) {
                 em.persist(additif);
             }
-
+            et.commit();
+            et.begin();
             for (Allergene allergene: allergenes.values()) {
                 em.persist(allergene);
             }
-
+            et.commit();
+            et.begin();
             for (Ingredient ingredient: ingredients.values()) {
                 em.persist(ingredient);
             }
-
-            em.persist(produit);
             et.commit();
+            et.begin();
+            for (Produit produit : produits){
+                em.persist(produit);
+            }
+            et.commit();*/
         }catch (Exception e){
             e.printStackTrace();
         }
