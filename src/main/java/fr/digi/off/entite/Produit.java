@@ -1,10 +1,8 @@
-package fr.digi.off;
+package fr.digi.off.entite;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

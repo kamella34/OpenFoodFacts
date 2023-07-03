@@ -1,9 +1,9 @@
-package fr.digi.off;
+package fr.digi.off.entite;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Allergene")
@@ -17,7 +17,10 @@ public class Allergene {
     private String nom;
 
     @ManyToMany(mappedBy = "allergenes")
-    private List<Produit> produits = new ArrayList<>();
+    private Set<Produit> produits;
+    {
+        produits = new HashSet<>();
+    }
 
     public Allergene() {
     }
@@ -42,11 +45,11 @@ public class Allergene {
         this.nom = nom;
     }
 
-    public List<Produit> getProduits() {
+    public Set<Produit> getProduits() {
         return produits;
     }
 
-    public void setProduits(List<Produit> produits) {
+    public void setProduits(Set<Produit> produits) {
         this.produits = produits;
     }
 

@@ -1,6 +1,6 @@
 package fr.digi.off.dao;
 
-import fr.digi.off.Ingredient;
+import fr.digi.off.entite.Ingredient;
 
 import java.util.List;
 

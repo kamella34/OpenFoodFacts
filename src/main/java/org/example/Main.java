@@ -1,272 +1,230 @@
 package org.example;
 
-import fr.digi.off.*;
+import fr.digi.off.dao.*;
+import fr.digi.off.dao.jpa.*;
+import fr.digi.off.entite.*;
 import jakarta.persistence.*;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<Produit> produits = new ArrayList<>();
-        Path path1 = Paths.get("src/main/resources/open-food-facts.csv");
-        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("openfoodfactsdev"); EntityManager em = emf.createEntityManager();) {
+        Path path = Paths.get("src/main/resources/open-food-facts.csv");
+        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("openfoodfactsdev");
+             EntityManager em = emf.createEntityManager();) {
             EntityTransaction et = em.getTransaction();
-            List<String> lines = Files.readAllLines(path1, StandardCharsets.UTF_8);
-            for (int i = 1; i < lines.size(); i++) {
-                String[] elements = formaté(lines.get(i));
+            final ProduitDao produitDAO = new ProduitDAOImpl(em);
+            final AdditifDao additifDAO = new AdditifDAOImpl(em);
+            final AllergeneDao allergeneDAO = new AllergeneDAOImpl(em);
+            final IngredientDao ingredientDAO = new IngredientDAOImpl(em);
+            final CategorieDao categorieDao = new CategorieDAOImpl(em);
+            final MarqueDao marqueDao = new MarqueDAOImpl(em);
 
-                // Traitement des caractères parasites, pourcentages et informations entre parenthèses
-                //Nom
-                String nom = traiter(elements[2]);
+            //Traitement fichier
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            for (int i = 1; i < lines.size(); i++) {
+                et.begin();
+                String[] columns = lines.get(i).split("\\|", 31);
 
                 //Graisse
-                String graisseString = elements[6];
-                double graisse = 0.0;
-                if (!graisseString.isEmpty()) {
-                    graisse = Double.parseDouble(graisseString);
-                }
+                double graisse = isDouble(columns[6]);
 
                 //Joule
-                String jouleString = elements[5];
-                double joule = 0.0;
-                if (!jouleString.isEmpty()) {
-                    joule = Double.parseDouble(jouleString);
+                double joule = isDouble(columns[5]);
+
+                //Additifs
+                String additifLine = traiter(columns[29]);
+                Set<Additif> setAdditifs = createAdditifs(additifLine, additifDAO);
+                for (Additif additif : setAdditifs) {
+                    additifDAO.save(additif);
+                }
+
+                //Allergènes
+                String allergeneLine = traiter(columns[28]);
+                Set<Allergene> setAllergenes = createAllergenes(allergeneLine, allergeneDAO);
+                for (Allergene allergene: setAllergenes) {
+                    allergeneDAO.save(allergene);
+                }
+
+                // Ingrédients
+                String ingredientLine = traiter(columns[4]);
+                Set<Ingredient> setIngredients = createIngredients(ingredientLine, ingredientDAO);
+                for (Ingredient ingredient: setIngredients) {
+                    ingredientDAO.save(ingredient);
                 }
 
                 // Categorie
-                String categorieName = traiter(elements[0]).trim();
-                Categorie categorie = createCategories(categorieName, em);
+                Categorie categorie = createCategorie(columns[0],categorieDao);
+                categorieDao.save(categorie);
 
                 // Marque
-                String marqueName = traiter(elements[1].trim());
-                Marque marque = createMarques(marqueName, em);
-
-                //Nutriscore
-                String nutriscore = elements[3];
+                String marqueName = traiter(columns[1]);
+                Marque marque = createMarque(marqueName,marqueDao);
+                if (marque != null) {
+                    marqueDao.save(marque);
+                }
 
                 //Produit
-                Produit produit = new Produit(nom, joule, graisse, NutriScore.getNutriScoreByLettre(nutriscore.toUpperCase()),categorie , marque);
-
-                //Ingrédients
-                String ingredients = traiter(elements[4]);
-                for (Ingredient ingredient: createIngredients(ingredients)) {
-                    produit.getIngredients().add(ingredient);
-                }
-                
-                //Alergènes
-                String allergenes = traiter(elements[28]);
-                for (Allergene allergene: createAllergenes(allergenes)) {
-                    produit.getAllergenes().add(allergene);
-                }
-
-                //Additifs
-                String additifs = traiter(elements[29]);
-                for (Additif additif: createAdditifs(additifs)) {
-                    produit.getAdditifs().add(additif);
-                }
-                produits.add(produit);
+                Produit produit = new Produit(columns[2], joule, graisse, NutriScore.getNutriScoreByLettre(columns[3].toUpperCase()),categorie , marque);
+                produit.setIngredients(setIngredients);
+                produit.setAllergenes(setAllergenes);
+                produit.setAdditifs(setAdditifs);
+                produitDAO.save(produit);
+                et.commit();
             }
-            et.begin();
-            // Boucle pour persister chaque produit dans la base de données
-            // Persistez les ingrédients
-            for (Produit produit : produits) {
-                // Persistez les ingrédients
-                for (Ingredient ingredient : produit.getIngredients()) {
-                    em.persist(ingredient);
-                }
-
-                // Persistez les allergènes
-                for (Allergene allergene : produit.getAllergenes()) {
-                    em.persist(allergene);
-                }
-
-                // Persistez les additifs
-                for (Additif additif : produit.getAdditifs()) {
-                    em.persist(additif);
-                }
-            }
-            // Puis persistez les produits
-            for (Produit produit : produits) {
-                em.persist(produit);
-            }
-            // Validation de la transaction
-            et.commit();
-        }catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-
+    //Metodes
+    /**
+     * On transforme la chaine de caractère en double et si on ne peut pas on retroune 0.0.
+     * @param string
+     * @return Double
+     */
+    public static double isDouble(String string) {
+        try {
+            return Double.parseDouble(string);
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
 
     /**
-     * Enlève les caractères parasite
-     * @param elements
-     * @return elements
+     * Enlever les caractères parasite.
+     * @param string
+     * @return String
      */
-    public static String traiter(String elements) {
+    public static String traiter(String string) {
         // Vérifier si la propriété ingredients est null
-        if (elements == null) {
-            elements = ""; // Ou une autre valeur par défaut
+        if (string == null) {
+            string = "";
         } else {
-            // Le reste du traitement...
-            elements = elements.replaceAll("\\*", "")
+            string = string.replaceAll("\\*", "")
                     .replaceAll("_", "")
                     .replaceAll("\\s*\\([^\\)]*\\)\\s*", "")
                     .replaceAll("\\d+%?", "")
-                    .replaceAll(",", "")
+                    .replaceAll(",", ";")
                     .replaceAll("%", "")
                     .replaceAll("[.:\\-,]", ";")
                     .replaceAll("[()]", "")
+                    .replaceAll("\\b(\\p{L})(?!\\p{L})\\b", "")
                     .trim();
         }
-        return elements;
+        return string;
     }
 
     /**
-     * Formaté le fichier
-     * @param elements
-     * @return elementsTab
+     * Création d'une marque.
+     * @param marqueName
+     * @param dao
+     * @return Marque
      */
-    public static String[] formaté(String elements){
-        elements = elements.substring(0, elements.length() - 1);
-        String[] charsTab = elements.split("");
-        int pipeCount = 0;
-        int pipeIngredient = 4;
-        int pipeAttendue = 29;
-        for (int ii = 0; ii < charsTab.length; ii++) {
-            //Compte le nombre de pipe apres ingrédient
-            if (charsTab[ii].equals("|")) {
-                pipeCount++;
+    public static Marque createMarque(String marqueName,MarqueDao dao) {
+            Marque marque = null;
+        marqueName = marqueName.trim();
+        if (!marqueName.isEmpty()){
+            try {
+                marque = dao.findByNom(marqueName);
+            } catch (RuntimeException e) {
+                marque = new Marque(marqueName);
             }
         }
-        if (pipeAttendue < pipeCount) {
-            int pipeSurplus = pipeCount - pipeAttendue;
-            int pipeCount2 = 0;
-            //on boucle sur la ligne
-            for (int j = 0; j < charsTab.length; j++) {
-                //Si on croise un pipe alors pipeCount2++
-                if (charsTab[j].equals("|")) {
-                    pipeCount2++;
-                }
-                if (pipeIngredient < pipeCount2) {
-                    if (pipeSurplus != 0) {
-                        charsTab[j] = "l";
-                    }
-                }
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String el : charsTab) {
-            stringBuilder.append(el);
-        }
-        elements = stringBuilder.toString();
-        String[] elementsTab = elements.split("\\|");
-        if (elementsTab.length < 30) {
-            String[] newToken = new String[30]; // Créer un tableau avec 30 éléments
-            System.arraycopy(elementsTab, 0, newToken, 0, elementsTab.length);
-            for (int j = elementsTab.length; j < 30; j++) {
-                newToken[j] = ""; // Remplir les éléments manquants avec une valeur par défaut (chaîne vide)
-            }
-            elementsTab = newToken;
-        }
-        return elementsTab;
+        return marque;
     }
 
     /**
-     * Création des ingrédients
-     * @param ingredients
-     * @return ingredientsTab
+     * Création d'une catégorie.
+     * @param categorieName
+     * @param dao
+     * @return Categorie
      */
-    public static Set<Ingredient> createIngredients(String ingredients){
-        Set<Ingredient> ingredientsTab = new HashSet<>();
-        String[] listIngredients = ingredients.split(";");
-        for (String ingredient: listIngredients) {
-            if (ingredient != null || ingredient != "") {
-                Ingredient objectIngredient = new Ingredient(ingredient.toLowerCase());
-                ingredientsTab.add(objectIngredient);
-            }
-        }
-        return ingredientsTab;
-    }
-
-    /**
-     * Création des allergènes
-     * @param allergenes
-     * @return allergenesTab
-     */
-    public static Set<Allergene> createAllergenes(String allergenes){
-        Set<Allergene> allergenesTab = new HashSet<>();
-        String[] listAllergenes = allergenes.split(";");
-        for (String allergene: listAllergenes) {
-            if (allergene != null || allergene != "") {
-                Allergene objectAllergene = new Allergene(allergene.toLowerCase());
-                allergenesTab.add(objectAllergene);
-            }
-        }
-        return allergenesTab;
-    }
-
-    /**
-     * Création des additifs
-     * @param additifs
-     * @return additifsTab
-     */
-    public static Set<Additif> createAdditifs(String additifs){
-        Set<Additif> additifsTab = new HashSet<>();
-        String[] listAdditifs = additifs.split(";");
-        for (String additif: listAdditifs) {
-            if (additif != null || additif != "") {
-                Additif objectAdditif = new Additif(additif.toLowerCase());
-                additifsTab.add(objectAdditif);
-            }
-        }
-        return additifsTab;
-    }
-
-    private static Categorie createCategories(String categorieName, EntityManager em) {
-        TypedQuery<Categorie> query = em.createQuery("SELECT c FROM Categorie c WHERE c.nom = :nom", Categorie.class);
-        query.setParameter("nom", categorieName);
-        Categorie existingCategorie;
-        try {
-            existingCategorie = query.getSingleResult();
-            System.out.println(existingCategorie);
-        } catch (NoResultException e) {
-            existingCategorie = null;
-        }
+    public static Categorie createCategorie(String categorieName, CategorieDao dao) {
         Categorie categorie;
-        if (existingCategorie != null) {
-            categorie = existingCategorie;
-        } else {
+        try {
+            categorie = dao.findByNom(categorieName);
+            if (categorie == null) {
+                categorie = new Categorie(categorieName);
+            }
+        } catch (NoResultException e) {
             categorie = new Categorie(categorieName);
-            em.persist(categorie);
         }
         return categorie;
     }
 
-    private static Marque createMarques(String marqueName, EntityManager em) {
-        TypedQuery<Marque> query = em.createQuery("SELECT m FROM Marque m WHERE m.nom = :nom", Marque.class);
-        query.setParameter("nom", marqueName);
-        Marque existingMarque;
-        try {
-            existingMarque = query.getSingleResult();
-            System.out.println(existingMarque);
-        } catch (NoResultException e) {
-            existingMarque = null;
+    /**
+     * Création des ingrédients.
+     * @param ingredientLine
+     * @param dao
+     * @return Set<Ingredient>
+     */
+    public static Set<Ingredient> createIngredients(String ingredientLine, IngredientDao dao) {
+        Set<Ingredient> setIngredients = new HashSet<>();
+        String[] ingredientsTab = ingredientLine.split(";");
+        for (String ingredientName : ingredientsTab) {
+            ingredientName = ingredientName.trim();
+            if (!ingredientName.isEmpty()) {
+                try {
+                    Ingredient ingredient = dao.findByNom(ingredientName);
+                    setIngredients.add(ingredient);
+                } catch (RuntimeException e) {
+                    Ingredient ingredient = new Ingredient(ingredientName);
+                    setIngredients.add(ingredient);
+                }
+            }
         }
-        Marque marque;
-        if (existingMarque != null) {
-            marque = existingMarque;
-        } else {
-            marque = new Marque(marqueName);
-            em.persist(marque);
+        return setIngredients;
+    }
+
+    /**
+     * Création des allergenes.
+     * @param allergeneLine
+     * @param dao
+     * @return Set<Allergene>
+     */
+    public static Set<Allergene> createAllergenes(String allergeneLine, AllergeneDao dao) {
+        Set<Allergene> setAllergene = new HashSet<>();
+        String[] allergenesTab = allergeneLine.split(";");
+        for (String allergeneName : allergenesTab) {
+            allergeneName = allergeneName.trim();
+            if (!allergeneName.isEmpty()){
+                try {
+                    Allergene allergene = dao.findByNom(allergeneName);
+                    setAllergene.add(allergene);
+                } catch (RuntimeException e) {
+                    Allergene allergene = new Allergene(allergeneName);
+                    setAllergene.add(allergene);
+                }
+            }
         }
-        return marque;
+        return setAllergene;
+    }
+
+    /**
+     * Création des additifs.
+     * @param additifsLine
+     * @param dao
+     * @return Set<Additif>
+     */
+    public static Set<Additif> createAdditifs(String additifsLine, AdditifDao dao) {
+        Set<Additif> setAdditifs = new HashSet<>();
+        String[] additifsTab = additifsLine.split(";");
+        for (String additifName : additifsTab) {
+            additifName = additifName.trim();
+            if (!additifName.isEmpty()) {
+                try {
+                    Additif additif = dao.findByNom(additifName);
+                    setAdditifs.add(additif);
+                } catch (RuntimeException e) {
+                    Additif additif = new Additif(additifName);
+                    setAdditifs.add(additif);
+                }
+            }
+        }
+        return setAdditifs;
     }
 }

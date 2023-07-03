@@ -12,19 +12,19 @@
       <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.dialect"
-                value="org.hibernate.dialect.MySQL8Dialect" />
+                value="org.hibernate.dialect.MySQLDialect" />
     </properties>
   </persistence-unit>
 
   <persistence-unit name="openfoodfactsdev" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <class>fr.digi.off.Additif</class>
-    <class>fr.digi.off.Allergene</class>
-    <class>fr.digi.off.Categorie</class>
-    <class>fr.digi.off.Marque</class>
-    <class>fr.digi.off.NutriScore</class>
-    <class>fr.digi.off.Ingredient</class>
-    <class>fr.digi.off.Produit</class>
+    <class>fr.digi.off.entite.Additif</class>
+    <class>fr.digi.off.entite.Allergene</class>
+    <class>fr.digi.off.entite.Categorie</class>
+    <class>fr.digi.off.entite.Marque</class>
+    <class>fr.digi.off.entite.NutriScore</class>
+    <class>fr.digi.off.entite.Ingredient</class>
+    <class>fr.digi.off.entite.Produit</class>
     <properties>
       <!-- desactiver l'autodetection des classes de type @Entity -->
       <property name="hibernate.archive.autodetection" value="" />
@@ -34,7 +34,7 @@
       <!-- Affichage des requêtes SQL -->
       <property name="hibernate.show_sql" value="false" />
       <property name="hibernate.dialect"
-                value="org.hibernate.dialect.MySQL8Dialect" />
+                value="org.hibernate.dialect.MySQLDialect" />
       <!-- Paramètres d'accès à la BDD -->
       <property name="javax.persistence.jdbc.url"
                 value="jdbc:mariadb://localhost:3306/OpenFoodFacts" />

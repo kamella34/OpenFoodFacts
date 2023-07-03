@@ -1,6 +1,6 @@
 package fr.digi.off.dao.jpa;
 
-import fr.digi.off.Allergene;
+import fr.digi.off.entite.Allergene;
 import fr.digi.off.dao.AllergeneDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

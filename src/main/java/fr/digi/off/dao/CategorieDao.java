@@ -1,6 +1,6 @@
 package fr.digi.off.dao;
 
-import fr.digi.off.Categorie;
+import fr.digi.off.entite.Categorie;
 
 import java.util.List;
 

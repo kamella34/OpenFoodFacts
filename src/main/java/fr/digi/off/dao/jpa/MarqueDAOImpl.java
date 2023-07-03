@@ -1,7 +1,7 @@
 package fr.digi.off.dao.jpa;
 
 import java.util.List;
-import fr.digi.off.Marque;
+import fr.digi.off.entite.Marque;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import fr.digi.off.dao.MarqueDao;

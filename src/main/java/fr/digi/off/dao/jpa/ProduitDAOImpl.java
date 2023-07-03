@@ -1,7 +1,7 @@
 package fr.digi.off.dao.jpa;
 
 import java.util.List;
-import fr.digi.off.Produit;
+import fr.digi.off.entite.Produit;
 import fr.digi.off.dao.ProduitDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

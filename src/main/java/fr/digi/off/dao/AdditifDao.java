@@ -1,6 +1,6 @@
 package fr.digi.off.dao;
 
-import fr.digi.off.Additif;
+import fr.digi.off.entite.Additif;
 import java.util.List;
 
 public interface AdditifDao {

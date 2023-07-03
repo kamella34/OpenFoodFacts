@@ -1,4 +1,4 @@
-package fr.digi.off;
+package fr.digi.off.entite;
 
 import jakarta.persistence.*;
 

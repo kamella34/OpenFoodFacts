@@ -1,6 +1,6 @@
 package fr.digi.off.dao.jpa;
 
-import fr.digi.off.Ingredient;
+import fr.digi.off.entite.Ingredient;
 import fr.digi.off.dao.IngredientDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

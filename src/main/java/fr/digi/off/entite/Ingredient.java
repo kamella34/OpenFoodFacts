@@ -1,6 +1,9 @@
-package fr.digi.off;
+package fr.digi.off.entite;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Ingredient")
@@ -13,8 +16,16 @@ public class Ingredient {
     @Column(name = "nom")
     private String nom;
 
+    @ManyToMany(mappedBy = "ingredients")
+    private Set<Produit> produits;
+
+    {
+        produits = new HashSet<Produit>();
+    }
+
     public Ingredient() {
     }
+
 
     public Ingredient(String nom) {
         this.nom = nom;

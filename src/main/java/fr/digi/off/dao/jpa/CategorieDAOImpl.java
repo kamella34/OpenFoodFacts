@@ -1,6 +1,6 @@
 package fr.digi.off.dao.jpa;
 
-import fr.digi.off.Categorie;
+import fr.digi.off.entite.Categorie;
 import fr.digi.off.dao.CategorieDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

@@ -1,6 +1,6 @@
 package fr.digi.off.dao;
 
-import fr.digi.off.Marque;
+import fr.digi.off.entite.Marque;
 
 import java.util.List;
 

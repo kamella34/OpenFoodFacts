@@ -1,4 +1,4 @@
-package fr.digi.off;
+package fr.digi.off.entite;
 
 import jakarta.persistence.*;
 
@@ -6,32 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Categorie")
-public class Categorie {
+@Table(name = "Marque")
+public class Marque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Categorie")
-    private int idCategorie;
+    @Column(name = "Id_Marque")
+    private int idMarque;
 
     @Column(name = "nom")
     private String nom;
 
-    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "marque", cascade = CascadeType.ALL)
     private List<Produit> produits = new ArrayList<>();
 
-    public Categorie() {
+    public Marque() {
     }
 
-    public Categorie(String nom) {
+    public Marque(String nom) {
         this.nom = nom;
     }
 
-    public int getIdCategorie() {
-        return idCategorie;
+    public int getIdMarque() {
+        return idMarque;
     }
 
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setIdMarque(int idMarque) {
+        this.idMarque = idMarque;
     }
 
     public String getNom() {
@@ -52,8 +52,8 @@ public class Categorie {
 
     @Override
     public String toString() {
-        return "Categorie{" +
-                "idCategorie=" + idCategorie +
+        return "Marque{" +
+                "idMarque=" + idMarque +
                 ", nom='" + nom + '\'' +
                 '}';
     }

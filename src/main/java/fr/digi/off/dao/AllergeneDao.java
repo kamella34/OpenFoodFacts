@@ -1,6 +1,6 @@
 package fr.digi.off.dao;
 
-import fr.digi.off.Allergene;
+import fr.digi.off.entite.Allergene;
 import java.util.List;
 
 public interface AllergeneDao {

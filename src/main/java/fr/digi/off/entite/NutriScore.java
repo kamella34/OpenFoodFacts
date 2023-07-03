@@ -1,8 +1,4 @@
-package fr.digi.off;
-
-
-import jakarta.persistence.Embeddable;
-
+package fr.digi.off.entite;
 
 
 public enum NutriScore {
